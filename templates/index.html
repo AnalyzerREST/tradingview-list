@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TradingView List</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <h1>TradingView List</h1>
+    <p>
+      Database of TradingView's symbol, exchange, and screener. This database is
+      not yet completed. Please
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/tradingview-list/issues/new/"
+        >create an issue</a
+      >
+      on GitHub to add your country. Both software and database are open-source
+      on
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/tradingview-list/"
+        >GitHub</a
+      >.
+    </p>
+    <label for="screener">Screener:</label>
+    <select name="screener" id="screener" onchange="search()">
+      <option value="all">All</option>
+      <option value="america">America</option>
+      <option value="cfd">CFD</option>
+      <option value="crypto">Crypto</option>
+      <option value="forex">Forex</option>
+      <option value="india">India</option>
+      <option value="indonesia">Indonesia</option>
+      <option value="uk">United Kingdom</option>
+    </select>
+    <label for="screener">Search:</label>
+    <input
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Search"
+      oninput="search()"
+      autofocus
+    />
+    <table>
+      <thead>
+        <tr>
+          <th>Screener</th>
+          <th>Exchange</th>
+          <th>Symbol</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="result"></tbody>
+    </table>
+    <p>Results are limited to 10 to reduce server load.</p>
+    <footer>
+      &copy;
+      <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
+      contributors |
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/python-tradingview-ta"
+        >python-tradingview-ta</a
+      >
+      |
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/tradingview-list"
+        >tradingview-list</a
+      >
+    </footer>
+    <script>
+      function search() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var result = JSON.parse(this.responseText)["r"];
+            var result_html = "";
+            for (let i = 0; i < result.length; i++) {
+              result_html =
+                result_html +
+                "<tr><td>" +
+                result[i][0] +
+                "</td><td>" +
+                result[i][1] +
+                "</td><td>" +
+                result[i][2] +
+                "</td><td>" +
+                result[i][3] +
+                "</td></tr>";
+            }
+            document.getElementById("result").innerHTML = result_html;
+          }
+        };
+        var screener = document.getElementById("screener").value;
+        var search = document.getElementById("search").value;
+        xhttp.open(
+          "GET",
+          encodeURI("search?q=" + search + "&sc=" + screener),
+          true
+        );
+        xhttp.send();
+      }
+    </script>
+  </body>
+</html>
