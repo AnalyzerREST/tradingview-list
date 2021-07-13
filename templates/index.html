@@ -84,10 +84,11 @@
           var regexp = new RegExp(search, "gi");
           var match = [...string.matchAll(regexp)];
           for (let i = 0; i < match.length; i++) {
-            string = string.replace(match[i], i);
+            // Add a unique string to prevent wrong replace.
+            string = string.replace(match[i], "TVDB" + i);
           }
           for (let i = 0; i < match.length; i++) {
-            string = string.replace(i, "<mark>" + match[i] + "</mark>");
+            string = string.replace("TVDB" + i, "<mark>" + match[i] + "</mark>");
           }
           return string
         } else {
