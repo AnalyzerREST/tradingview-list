@@ -1,6 +1,6 @@
 import sqlite3, requests
 
-screener = ["america", "forex", "crypto", "indonesia", "india", "cfd", "uk", "brazil", "vietnam", "rsa", "ksa", "australia", "russia", "thailand"]
+screener = ["america", "forex", "crypto", "indonesia", "india", "cfd", "uk", "brazil", "vietnam", "rsa", "ksa", "australia", "russia", "thailand", "philippines"]
 
 def add(screener, exchange, symbol, description):
     with sqlite3.connect('tradingview.db') as con:
