@@ -1,6 +1,11 @@
 import sqlite3, requests
 
-screener = ["america", "forex", "crypto", "indonesia", "india", "cfd", "uk", "brazil", "vietnam", "rsa", "ksa", "australia", "russia", "thailand", "philippines", "taiwan", "sweden"]
+with sqlite3.connect('tradingview.db') as con:
+    db = con.cursor()
+    db.execute("CREATE TABLE IF NOT EXISTS tv (screener TEXT, exchange TEXT, symbol TEXT, desc TEXT)")
+    con.commit()
+
+screener = ["america", "forex", "crypto", "indonesia", "india", "cfd", "uk", "brazil", "vietnam", "rsa", "ksa", "australia", "russia", "thailand", "philippines", "taiwan", "sweden", "france", "turkey"]
 
 def add(screener, exchange, symbol, description):
     with sqlite3.connect('tradingview.db') as con:
