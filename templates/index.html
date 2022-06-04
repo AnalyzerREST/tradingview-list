@@ -1,143 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TradingView List</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <h1>TradingView List</h1>
-    <p>
-      Database of TradingView's symbol, exchange, and screener. This database is
-      not yet completed. Please
-      <a
-        rel="noopener"
-        target="_blank"
-        href="https://github.com/brian-the-dev/tradingview-list/issues/new/"
-        >create an issue</a
-      >
-      on GitHub to add your country. Both software and database are open-source
-      on
-      <a
-        rel="noopener"
-        target="_blank"
-        href="https://github.com/brian-the-dev/tradingview-list/"
-        >GitHub</a
-      >.
-    </p>
-    <label for="screener">Screener:</label>
-    <select name="screener" id="screener" onchange="search()">
-      <option value="all">All</option>
-      <option value="america">America</option>
-      <option value="australia">Australia</option>
-      <option value="brazil">Brazil</option>
-      <option value="cfd">CFD</option>
-      <option value="crypto">Crypto</option>
-      <option value="forex">Forex</option>
-      <option value="france">France</option>
-      <option value="india">India</option>
-      <option value="indonesia">Indonesia</option>
-      <option value="philippines">Philippines</option>
-      <option value="russia">Russia</option>
-      <option value="ksa">Saudi Arabia</option>
-      <option value="rsa">South Africa</option>
-      <option value="sweden">Sweden</option>
-      <option value="taiwan">Taiwan</option>
-      <option value="thailand">Thailand</option>
-      <option value="turkey">Turkey</option>
-      <option value="uk">United Kingdom</option>
-      <option value="vietnam">Vietnam</option>
-    </select>
-    <label for="screener">Search:</label>
-    <input
-      type="text"
-      id="search"
-      name="search"
-      placeholder="Search"
-      oninput="search()"
-      autofocus
-    />
-    <table>
-      <thead>
-        <tr>
-          <th>Screener</th>
-          <th>Exchange</th>
-          <th>Symbol</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody id="result"></tbody>
-    </table>
-    <p>Results are limited to 10 to reduce server load.</p>
-    <footer>
-      &copy;
-      <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
-      contributors |
-      <a
-        rel="noopener"
-        target="_blank"
-        href="https://github.com/brian-the-dev/python-tradingview-ta"
-        >python-tradingview-ta</a
-      >
-      |
-      <a
-        rel="noopener"
-        target="_blank"
-        href="https://github.com/brian-the-dev/tradingview-list"
-        >tradingview-list</a
-      >
-    </footer>
-    <script>
-      function mark(search, string) {
-        if (search.length != 0) {
-          var regexp = new RegExp(search, "gi");
-          var match = [...string.matchAll(regexp)];
-          for (let i = 0; i < match.length; i++) {
-            // Add a unique string to prevent wrong replace.
-            string = string.replace(match[i], "TVDB" + i);
-          }
-          for (let i = 0; i < match.length; i++) {
-            string = string.replace("TVDB" + i, "<mark>" + match[i] + "</mark>");
-          }
-          return string
-        } else {
-          return string
+
+<head>
+  <title>TradingView List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <h1>TradingView List</h1>
+  <p>
+    This website lists symbol, exchange, and screener supported by the python library tradingview-ta. The database isn't
+    complete, so please <a rel="noopener" target="_blank"
+      href="https://github.com/brian-the-dev/tradingview-list/issues/new/">open an issue</a> on GitHub if you can't find
+    your country. Please note that indices are not supported by tradingview-ta, this is a limitation from TradingView's API,
+    not the library.
+  </p>
+  <label for="screener">Screener:</label>
+  <select name="screener" id="screener" onchange="search()">
+    <option value="all">All</option>
+    <option value="america">America</option>
+    <option value="australia">Australia</option>
+    <option value="brazil">Brazil</option>
+    <option value="cfd">CFD</option>
+    <option value="crypto">Crypto</option>
+    <option value="forex">Forex</option>
+    <option value="france">France</option>
+    <option value="india">India</option>
+    <option value="indonesia">Indonesia</option>
+    <option value="philippines">Philippines</option>
+    <option value="russia">Russia</option>
+    <option value="ksa">Saudi Arabia</option>
+    <option value="rsa">South Africa</option>
+    <option value="sweden">Sweden</option>
+    <option value="taiwan">Taiwan</option>
+    <option value="thailand">Thailand</option>
+    <option value="turkey">Turkey</option>
+    <option value="uk">United Kingdom</option>
+    <option value="vietnam">Vietnam</option>
+  </select>
+  <label for="screener">Search:</label>
+  <input type="text" id="search" name="search" placeholder="Search" oninput="search()" autofocus />
+  <table>
+    <thead>
+      <tr>
+        <th>Screener</th>
+        <th>Exchange</th>
+        <th>Symbol</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="result"></tbody>
+  </table>
+  <p>Results are limited to 10 to reduce server load.</p>
+  <footer>
+    &copy;
+    <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
+    contributors |
+    <a rel="noopener" target="_blank"
+      href="https://github.com/brian-the-dev/python-tradingview-ta">python-tradingview-ta</a>
+    |
+    <a rel="noopener" target="_blank" href="https://github.com/brian-the-dev/tradingview-list">tradingview-list</a>
+  </footer>
+  <script>
+    function mark(search, string) {
+      if (search.length != 0) {
+        var regexp = new RegExp(search, "gi");
+        var match = [...string.matchAll(regexp)];
+        for (let i = 0; i < match.length; i++) {
+          // Add a unique string to prevent wrong replace.
+          string = string.replace(match[i], "TVDB" + i);
         }
+        for (let i = 0; i < match.length; i++) {
+          string = string.replace("TVDB" + i, "<mark>" + match[i] + "</mark>");
+        }
+        return string
+      } else {
+        return string
       }
-      function search() {
-        var screener = document.getElementById("screener").value;
-        var search = document.getElementById("search").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            var result = JSON.parse(this.responseText)["r"];
-            var result_html = "";
-            for (let i = 0; i < result.length; i++) {
-              result_html =
-                result_html +
-                "<tr><td>" +
-                result[i][0] +
-                "</td><td>" +
-                mark(search, result[i][1]) +
-                "</td><td>" +
-                mark(search, result[i][2]) +
-                "</td><td>" +
-                mark(search, result[i][3]) +
-                "</td></tr>";
-            }
-            document.getElementById("result").innerHTML = result_html;
+    }
+    function search() {
+      var screener = document.getElementById("screener").value;
+      var search = document.getElementById("search").value;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var result = JSON.parse(this.responseText)["r"];
+          var result_html = "";
+          for (let i = 0; i < result.length; i++) {
+            result_html =
+              result_html +
+              "<tr><td>" +
+              result[i][0] +
+              "</td><td>" +
+              mark(search, result[i][1]) +
+              "</td><td>" +
+              mark(search, result[i][2]) +
+              "</td><td>" +
+              mark(search, result[i][3]) +
+              "</td></tr>";
           }
-        };
-        xhttp.open(
-          "GET",
-          encodeURI("search?q=" + search + "&sc=" + screener),
-          true
-        );
-        xhttp.send();
-      }
-    </script>
-  </body>
+          document.getElementById("result").innerHTML = result_html;
+        }
+      };
+      xhttp.open(
+        "GET",
+        encodeURI("search?q=" + search + "&sc=" + screener),
+        true
+      );
+      xhttp.send();
+    }
+  </script>
+</body>
+
 </html>
