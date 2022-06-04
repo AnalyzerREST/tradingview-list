@@ -1,3 +1,6 @@
 flask
+flask_socketio
+gevent
+gevent-websocket
 gunicorn
 requests

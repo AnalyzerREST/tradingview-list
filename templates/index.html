@@ -13,7 +13,8 @@
     This website lists symbol, exchange, and screener supported by the python library tradingview-ta. The database isn't
     complete, so please <a rel="noopener" target="_blank"
       href="https://github.com/brian-the-dev/tradingview-list/issues/new/">open an issue</a> on GitHub if you can't find
-    your country. Please note that indices are not supported by tradingview-ta, this is a limitation from TradingView's API,
+    your country. Please note that indices are not supported by tradingview-ta, this is a limitation from TradingView's
+    API,
     not the library.
   </p>
   <label for="screener">Screener:</label>
@@ -52,7 +53,7 @@
     </thead>
     <tbody id="result"></tbody>
   </table>
-  <p>Results are limited to 10 to reduce server load.</p>
+  <p>Results are limited to 20 to reduce server load.</p>
   <footer>
     &copy;
     <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
@@ -62,6 +63,9 @@
     |
     <a rel="noopener" target="_blank" href="https://github.com/brian-the-dev/tradingview-list">tradingview-list</a>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"
+    integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     function mark(search, string) {
       if (search.length != 0) {
@@ -79,36 +83,32 @@
         return string
       }
     }
+    var socket = io();
     function search() {
       var screener = document.getElementById("screener").value;
-      var search = document.getElementById("search").value;
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var result = JSON.parse(this.responseText)["r"];
-          var result_html = "";
-          for (let i = 0; i < result.length; i++) {
-            result_html =
-              result_html +
-              "<tr><td>" +
-              result[i][0] +
-              "</td><td>" +
-              mark(search, result[i][1]) +
-              "</td><td>" +
-              mark(search, result[i][2]) +
-              "</td><td>" +
-              mark(search, result[i][3]) +
-              "</td></tr>";
-          }
-          document.getElementById("result").innerHTML = result_html;
+      var query = document.getElementById("search").value;
+      socket.emit("search_event", {
+        screener: screener,
+        query: query
+      });
+      socket.on("response", (data) => {
+        var result = data["r"];
+        var result_html = "";
+        for (let i = 0; i < result.length; i++) {
+          result_html =
+            result_html +
+            "<tr><td>" +
+            result[i][0] +
+            "</td><td>" +
+            mark(query, result[i][1]) +
+            "</td><td>" +
+            mark(query, result[i][2]) +
+            "</td><td>" +
+            mark(query, result[i][3]) +
+            "</td></tr>";
         }
-      };
-      xhttp.open(
-        "GET",
-        encodeURI("search?q=" + search + "&sc=" + screener),
-        true
-      );
-      xhttp.send();
+        document.getElementById("result").innerHTML = result_html;
+      });
     }
   </script>
 </body>
