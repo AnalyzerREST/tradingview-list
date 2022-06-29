@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
-import sqlite3
+import sqlite3, json, zlib
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -23,7 +23,7 @@ def handle_search_event(data):
         else:
             # https://xkcd.com/327/
             rows = db.execute("SELECT * FROM tv WHERE screener = ? AND (exchange LIKE ? OR symbol LIKE ? OR desc LIKE ?) LIMIT 20", (screener, q, q, q))
-    emit('response', {"r": list(rows)})
+    emit('response', {"r": zlib.compress(bytes(json.dumps(list(rows)), "utf-8"))})
 
 if __name__ == '__main__':
     socketio.run(app, debug=False)
