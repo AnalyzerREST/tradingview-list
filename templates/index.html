@@ -1,78 +1,127 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>TradingView List</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fork-awesome/1.2.0/css/fork-awesome.min.css"
+      integrity="sha512-aupidr80M36SeyviA/hZ2uEPnvt2dTJfyjm9y6z1MgaV13TgzmDiFdsH3cvSNG27mRIj7gJ2gNeg1HeySJyE3Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
 
-<head>
-  <title>TradingView List</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-
-<body>
-  <h1>TradingView List</h1>
-  <p>
-    This website lists symbol, exchange, and screener supported by the python library tradingview-ta. The database isn't
-    complete, so please <a rel="noopener" target="_blank"
-      href="https://github.com/brian-the-dev/tradingview-list/issues/new/">open an issue</a> on GitHub if you can't find
-    your country. Please note that indices are not supported by tradingview-ta, this is a limitation from TradingView's
-    API,
-    not the library.
-  </p>
-  <label for="screener">Screener:</label>
-  <select name="screener" id="screener" onchange="search()">
-    <option value="all">All</option>
-    <option value="america">America</option>
-    <option value="australia">Australia</option>
-    <option value="brazil">Brazil</option>
-    <option value="cfd">CFD</option>
-    <option value="crypto">Crypto</option>
-    <option value="euronext">Euronext</option>
-    <option value="forex">Forex</option>
-    <option value="france">France</option>
-    <option value="germany">Germany</option>
-    <option value="india">India</option>
-    <option value="indonesia">Indonesia</option>
-    <option value="philippines">Philippines</option>
-    <option value="russia">Russia</option>
-    <option value="ksa">Saudi Arabia</option>
-    <option value="rsa">South Africa</option>
-    <option value="spain">Spain</option>
-    <option value="sweden">Sweden</option>
-    <option value="taiwan">Taiwan</option>
-    <option value="thailand">Thailand</option>
-    <option value="turkey">Turkey</option>
-    <option value="uk">United Kingdom</option>
-    <option value="vietnam">Vietnam</option>
-  </select>
-  <label for="screener">Search:</label>
-  <input type="text" id="search" name="search" placeholder="Search" oninput="search()" autofocus />
-  <table>
-    <thead>
-      <tr>
-        <th>Screener</th>
-        <th>Exchange</th>
-        <th>Symbol</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody id="result"></tbody>
-  </table>
-  <p>Results are limited to 20 to reduce server load.</p>
-  <footer>
-    &copy;
-    <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
-    contributors |
-    <a rel="noopener" target="_blank"
-      href="https://github.com/brian-the-dev/python-tradingview-ta">python-tradingview-ta</a>
-    |
-    <a rel="noopener" target="_blank" href="https://github.com/brian-the-dev/tradingview-list">tradingview-list</a>
-  </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"
-    integrity="sha512-mHO4BJ0ELk7Pb1AzhTi3zvUeRgq3RXVOu9tTRfnA6qOxGK4pG2u57DJYolI4KrEnnLTcH9/J5wNOozRTDaybXg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako_inflate.min.js"
-    integrity="sha512-fgc3x4jhafjzc+RLRBO+llDWTvHZdOmpQU3qU7iZ5Qm0nZ9KWPGytu3j06tcm4ZZ2jf6fCz/oSK7KrILK5K+AA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-
+  <body>
+    <h1>TradingView List</h1>
+    <p>
+      This website lists symbol, exchange, and screener supported by the python
+      library tradingview-ta. The database isn't complete, so please
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/tradingview-list/issues/new/"
+        >open an issue</a
+      >
+      on GitHub if you can't find your country. Please note that indices are not
+      supported by tradingview-ta, this is a limitation from TradingView's API,
+      not the library.
+    </p>
+    <label for="screener">Screener:</label>
+    <select name="screener" id="screener" onchange="search()">
+      <option value="all">All</option>
+      <option value="america">America</option>
+      <option value="australia">Australia</option>
+      <option value="brazil">Brazil</option>
+      <option value="cfd">CFD</option>
+      <option value="crypto">Crypto</option>
+      <option value="euronext">Euronext</option>
+      <option value="forex">Forex</option>
+      <option value="france">France</option>
+      <option value="germany">Germany</option>
+      <option value="india">India</option>
+      <option value="indonesia">Indonesia</option>
+      <option value="philippines">Philippines</option>
+      <option value="russia">Russia</option>
+      <option value="ksa">Saudi Arabia</option>
+      <option value="rsa">South Africa</option>
+      <option value="spain">Spain</option>
+      <option value="sweden">Sweden</option>
+      <option value="taiwan">Taiwan</option>
+      <option value="thailand">Thailand</option>
+      <option value="turkey">Turkey</option>
+      <option value="uk">United Kingdom</option>
+      <option value="vietnam">Vietnam</option>
+    </select>
+    <label for="screener">Search:</label>
+    <input
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Search"
+      oninput="search()"
+      autofocus
+    />
+    <table>
+      <thead>
+        <tr>
+          <th>Screener</th>
+          <th>Exchange</th>
+          <th>Symbol</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="result"></tbody>
+    </table>
+    <div id="pagination" style="display: flex">
+      <button onclick="chg_page(-1)">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>
+      <input
+        type="number"
+        id="page"
+        value="1"
+        min="1"
+        onchange="set_page(this.value)"
+      />
+      <button onclick="chg_page(1)">
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </div>
+    <footer>
+      &copy;
+      <a rel="noopener" target="_blank" href="https://brianthe.dev">Brian</a> &
+      contributors |
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/python-tradingview-ta"
+        >python-tradingview-ta</a
+      >
+      |
+      <a
+        rel="noopener"
+        target="_blank"
+        href="https://github.com/brian-the-dev/tradingview-list"
+        >tradingview-list</a
+      >
+    </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"
+      integrity="sha512-mHO4BJ0ELk7Pb1AzhTi3zvUeRgq3RXVOu9tTRfnA6qOxGK4pG2u57DJYolI4KrEnnLTcH9/J5wNOozRTDaybXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako_inflate.min.js"
+      integrity="sha512-fgc3x4jhafjzc+RLRBO+llDWTvHZdOmpQU3qU7iZ5Qm0nZ9KWPGytu3j06tcm4ZZ2jf6fCz/oSK7KrILK5K+AA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
 </html>

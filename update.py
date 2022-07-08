@@ -1,5 +1,6 @@
 import sqlite3
 import requests
+import config
 
 # Crete db if it doesn't exist
 with sqlite3.connect('tradingview.db') as con:
@@ -14,11 +15,8 @@ with sqlite3.connect('tradingview.db') as con:
     db.execute("DELETE FROM tv")
     con.commit()
 
-screener = ["america", "forex", "crypto", "indonesia", "india", "cfd", "uk", "brazil", "vietnam", "rsa", "ksa",
-            "australia", "russia", "thailand", "philippines", "taiwan", "sweden", "france", "turkey", "euronext", "germany", "spain"]
-
 for types in ["", "\"futures\""]:
-    for x in screener:
+    for x in config.SCREENER:
         print(f"Loading screener: {x}")
         r = requests.post(f"https://scanner.tradingview.com/{x}/scan",
                           data=f'{{"symbols":{{"tickers":[],"query":{{"types":[{types}]}}}},"columns":["description"]}}')
