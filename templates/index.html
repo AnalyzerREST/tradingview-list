@@ -33,30 +33,9 @@
     </p>
     <label for="screener">Screener:</label>
     <select name="screener" id="screener" onchange="search()">
-      <option value="all">All</option>
-      <option value="america">America</option>
-      <option value="australia">Australia</option>
-      <option value="brazil">Brazil</option>
-      <option value="cfd">CFD</option>
-      <option value="crypto">Crypto</option>
-      <option value="euronext">Euronext</option>
-      <option value="forex">Forex</option>
-      <option value="france">France</option>
-      <option value="germany">Germany</option>
-      <option value="hongkong">Hong Kong</option>
-      <option value="india">India</option>
-      <option value="indonesia">Indonesia</option>
-      <option value="philippines">Philippines</option>
-      <option value="russia">Russia</option>
-      <option value="ksa">Saudi Arabia</option>
-      <option value="rsa">South Africa</option>
-      <option value="spain">Spain</option>
-      <option value="sweden">Sweden</option>
-      <option value="taiwan">Taiwan</option>
-      <option value="thailand">Thailand</option>
-      <option value="turkey">Turkey</option>
-      <option value="uk">United Kingdom</option>
-      <option value="vietnam">Vietnam</option>
+      {% for x in screener %}
+        <option value="{{ x[0] }}">{{ x[1] }}</option>
+      {% endfor %}
     </select>
     <label for="screener">Search:</label>
     <input

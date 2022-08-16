@@ -16,7 +16,7 @@ with sqlite3.connect('tradingview.db') as con:
     con.commit()
 
 for types in ["", "\"futures\""]:
-    for x in config.SCREENER:
+    for x, _ in config.SCREENER.items():
         print(f"Loading screener: {x}")
         r = requests.post(f"https://scanner.tradingview.com/{x}/scan",
                           data=f'{{"symbols":{{"tickers":[],"query":{{"types":[{types}]}}}},"columns":["description"]}}')

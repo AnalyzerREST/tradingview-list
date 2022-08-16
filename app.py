@@ -12,7 +12,7 @@ socketio.init_app(app, cors_allowed_origins="*")
 
 @app.route("/", methods=["GET"])
 def root():
-    return render_template("index.html")
+    return render_template("index.html", screener=sorted(config.SCREENER.items(), key=lambda x: x[1]))
 
 
 @socketio.on("search_event")
