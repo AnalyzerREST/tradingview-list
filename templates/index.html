@@ -33,6 +33,7 @@
     </p>
     <label for="screener">Screener:</label>
     <select name="screener" id="screener" onchange="search()">
+      <option value="all">All</option>
       {% for x in screener %}
         <option value="{{ x[0] }}">{{ x[1] }}</option>
       {% endfor %}
