@@ -6,6 +6,7 @@ SCREENER = {
     "crypto": "Cryptocurrency", 
     "indonesia": "Indonesia", 
     "india" : "India", 
+    "italy": "Italy",
     "cfd": "CFD", 
     "uk": "United Kingdom", 
     "brazil": "Brazil", 
