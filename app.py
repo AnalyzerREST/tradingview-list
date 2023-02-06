@@ -4,15 +4,17 @@ import sqlite3
 import json
 import zlib
 import config
+import os
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
+ad = os.environ.get("AD_CODE")
 
 
 @app.route("/", methods=["GET"])
 def root():
-    return render_template("index.html", screener=sorted(config.SCREENER.items(), key=lambda x: x[1]))
+    return render_template("index.html", screener=sorted(config.SCREENER.items(), key=lambda x: x[1]), ad=ad)
 
 
 @socketio.on("search_event")
