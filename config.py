@@ -27,4 +27,5 @@ SCREENER = {
     "hongkong": "Hong Kong", 
     "korea": "South Korea",
     "malaysia": "Malaysia",
+    "canada": "Canada",
 }
